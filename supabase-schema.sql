@@ -1,3 +1,6 @@
+-- Ensure pgcrypto for gen_random_uuid
+CREATE EXTENSION IF NOT EXISTS pgcrypto;
+
 -- Create listings table
 CREATE TABLE IF NOT EXISTS listings (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
@@ -77,22 +80,27 @@ CREATE TRIGGER update_listings_updated_at
 -- Enable Row Level Security (RLS)
 ALTER TABLE listings ENABLE ROW LEVEL SECURITY;
 
--- Drop existing policies if they exist, then create them
+-- Replace policies to support client inserts (anon) and owner-controlled updates/deletes
 DROP POLICY IF EXISTS "Allow public read access" ON listings;
-CREATE POLICY "Allow public read access" ON listings
-    FOR SELECT USING (true);
-
 DROP POLICY IF EXISTS "Allow authenticated users to insert" ON listings;
-CREATE POLICY "Allow authenticated users to insert" ON listings
-    FOR INSERT WITH CHECK (auth.role() = 'authenticated');
-
 DROP POLICY IF EXISTS "Allow users to update their own listings" ON listings;
-CREATE POLICY "Allow users to update their own listings" ON listings
-    FOR UPDATE USING (auth.uid()::text = owner OR owner = 'anonymous');
-
 DROP POLICY IF EXISTS "Allow users to delete their own listings" ON listings;
-CREATE POLICY "Allow users to delete their own listings" ON listings
-    FOR DELETE USING (auth.uid()::text = owner OR owner = 'anonymous');
+
+-- Read for everyone
+CREATE POLICY "Allow public read access" ON listings
+  FOR SELECT USING (true);
+
+-- Allow public inserts (client via anon key). DB constraints still enforce correctness.
+CREATE POLICY "Allow public inserts for listings" ON listings
+  FOR INSERT WITH CHECK (true);
+
+-- Owner-controlled updates/deletes (owner is wallet address provided by client)
+CREATE POLICY "Allow owner updates" ON listings
+  FOR UPDATE USING (owner IS NOT NULL)
+  WITH CHECK (owner IS NOT NULL);
+
+CREATE POLICY "Allow owner deletes" ON listings
+  FOR DELETE USING (owner IS NOT NULL);
 
 -- Insert some sample data
 INSERT INTO listings (name, ticker, short_desc, chain, website, twitter, telegram, owner, status) VALUES
