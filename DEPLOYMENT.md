@@ -7,8 +7,6 @@ Create a `.env.local` file in your project root with:
 ```bash
 VITE_SUPABASE_URL=your_supabase_project_url
 VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
-VITE_TELEGRAM_BOT_TOKEN=your_telegram_bot_token (optional)
-VITE_TELEGRAM_CHAT_ID=your_telegram_chat_id (optional)
 ```
 
 ### 2. GitHub Repository Setup

@@ -17,6 +17,8 @@ export default defineConfig(({ mode }) => ({
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
+      buffer: 'buffer',
+      process: 'process/browser',
     },
   },
   build: {
@@ -34,6 +36,16 @@ export default defineConfig(({ mode }) => ({
     }
   },
   define: {
-    __APP_VERSION__: JSON.stringify(process.env.npm_package_version)
+    __APP_VERSION__: JSON.stringify(process.env.npm_package_version),
+    global: 'globalThis',
+    Buffer: ['buffer', 'Buffer'],
+  },
+  optimizeDeps: {
+    include: ['buffer', 'process']
+  },
+  esbuild: {
+    define: {
+      global: 'globalThis',
+    }
   }
 }));
