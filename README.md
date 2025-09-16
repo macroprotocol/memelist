@@ -1,8 +1,10 @@
-# Welcome to your Lovable project
+# Memelist.Fun
 
-## Project info
+Professional multi-chain meme coin discovery and listing platform.
 
-**URL**: https://lovable.dev/projects/58e24265-cbb0-43b5-8f00-51cfb7c10f6d
+## Live site
+
+- https://www.memelist.fun
 
 ## How can I edit this code?
 
@@ -50,7 +52,7 @@ npm run dev
 - Click on "New codespace" to launch a new Codespace environment.
 - Edit files directly within the Codespace and commit and push your changes once you're done.
 
-## What technologies are used for this project?
+## Tech stack
 
 This project is built with:
 
@@ -59,6 +61,41 @@ This project is built with:
 - React
 - shadcn-ui
 - Tailwind CSS
+
+## Development
+
+Install and run locally:
+
+```sh
+npm i
+npm run dev
+```
+
+Build for production:
+
+```sh
+npm run build
+```
+
+Preview build:
+
+```sh
+npm run preview
+```
+
+## Accessibility and performance
+
+- Improved color contrast in footer copyright text.
+- Fixed heading order in filters dropdown (h2 hierarchy).
+- Added accessible names to icon-only buttons.
+- Removed unused CSS utilities and animations to cut bundle size.
+- Lazy-loaded heavy modal (`ListCoinModal`) to reduce initial JS.
+
+## Support
+
+- Report a Bug: https://t.me/memelisdotfun
+- Need Help: https://t.me/ApeNo1
+- Request Direct Listing: https://t.me/ApeNo1
 
 ## How can I deploy this project?
 
