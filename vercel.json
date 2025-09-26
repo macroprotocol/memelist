@@ -22,9 +22,12 @@
     }
   ],
   "redirects": [
-    { "source": "http://memelist.fun/:path*", "destination": "https://memelist.fun/:path*", "permanent": true },
-    { "source": "http://www.memelist.fun/:path*", "destination": "https://memelist.fun/:path*", "permanent": true },
-    { "source": "https://www.memelist.fun/:path*", "destination": "https://memelist.fun/:path*", "permanent": true }
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "www.memelist.fun" }],
+      "destination": "https://memelist.fun/:path*",
+      "permanent": true
+    }
   ],
   "env": {
     "NODE_ENV": "production"
